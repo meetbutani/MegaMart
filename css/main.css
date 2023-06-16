@@ -217,7 +217,7 @@ label .close {
   background-color: #D4D4D4;
 }
 .main .header .logo {
-  margin: 12.5px 0;
+  height: 28px;
 }
 .main .header .my-nav-item-direction {
   flex-direction: row;

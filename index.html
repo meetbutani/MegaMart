@@ -13,15 +13,23 @@
 
 <body>
     <div class="main">
-        <!-- Offcanvas Sidebar -->
-        <div class="offcanvas offcanvas-end" id="leftsidebar">
+        <!-- Offcanvas Sidebar for Cart -->
+        <div class="offcanvas offcanvas-end" id="cartsidebar">
             <div class="offcanvas-header">
                 <h1 class="offcanvas-title">Shopping Cart</h1>
                 <span class="cart-close" data-bs-dismiss="offcanvas">
-                    <img src="./images/close_cart.svg" alt="">
+                    <!-- <img src="./images/close_cart.svg" alt=""> -->
+                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M7.63074 10.5843C7.6974 10.5254 7.77658 10.4786 7.86377 10.4468C7.95095 10.4149 8.04441 10.3985 8.13879 10.3985C8.23318 10.3985 8.32664 10.4149 8.41382 10.4468C8.501 10.4786 8.58019 10.5254 8.64685 10.5843L10.2916 12.0351L11.9363 10.5843C12.071 10.4655 12.2538 10.3988 12.4443 10.3988C12.6349 10.3988 12.8176 10.4655 12.9524 10.5843C13.0871 10.703 13.1628 10.8641 13.1628 11.032C13.1628 11.2 13.0871 11.361 12.9524 11.4798L11.3062 12.9293L12.9524 14.3789C13.0871 14.4976 13.1628 14.6587 13.1628 14.8267C13.1628 14.9946 13.0871 15.1557 12.9524 15.2744C12.8176 15.3932 12.6349 15.4599 12.4443 15.4599C12.2538 15.4599 12.071 15.3932 11.9363 15.2744L10.2916 13.8236L8.64685 15.2744C8.5121 15.3932 8.32935 15.4599 8.13879 15.4599C7.94824 15.4599 7.76548 15.3932 7.63074 15.2744C7.496 15.1557 7.4203 14.9946 7.4203 14.8267C7.4203 14.6587 7.496 14.4976 7.63074 14.3789L9.27689 12.9293L7.63074 11.4798C7.56391 11.4211 7.51089 11.3513 7.47472 11.2744C7.43854 11.1976 7.41992 11.1152 7.41992 11.032C7.41992 10.9488 7.43854 10.8665 7.47472 10.7896C7.51089 10.7128 7.56391 10.643 7.63074 10.5843Z"
+                            fill="#9F9F9F" />
+                        <path
+                            d="M10.2919 1.54539C11.2434 1.54539 12.156 1.87855 12.8289 2.47157C13.5018 3.0646 13.8798 3.86891 13.8798 4.70758V5.34001H6.70391V4.70758C6.70391 3.86891 7.08192 3.0646 7.75479 2.47157C8.42766 1.87855 9.34027 1.54539 10.2919 1.54539ZM15.315 5.34001V4.70758C15.315 3.53345 14.7858 2.40741 13.8437 1.57717C12.9017 0.746939 11.6241 0.280518 10.2919 0.280518C8.95964 0.280518 7.68199 0.746939 6.73997 1.57717C5.79795 2.40741 5.26873 3.53345 5.26873 4.70758V5.34001H0.245605V17.9888C0.245605 18.6597 0.548017 19.3031 1.08631 19.7776C1.62461 20.252 2.3547 20.5185 3.11596 20.5185H17.4677C18.229 20.5185 18.9591 20.252 19.4974 19.7776C20.0357 19.3031 20.3381 18.6597 20.3381 17.9888V5.34001H15.315ZM1.68078 6.60489H18.9029V17.9888C18.9029 18.3242 18.7517 18.6459 18.4826 18.8832C18.2134 19.1204 17.8484 19.2536 17.4677 19.2536H3.11596C2.73533 19.2536 2.37029 19.1204 2.10114 18.8832C1.83199 18.6459 1.68078 18.3242 1.68078 17.9888V6.60489Z"
+                            fill="#9F9F9F" />
+                    </svg>
                 </span>
             </div>
-            <div class="offcanvas-body" id="cartContainer">
+            <div class="offcanvas-body cart" id="cartContainer">
                 <!-- <div class="cart-item">
                     <div class="prod-img">
                         <img src="./images/Asgaard sofa 5.png" alt="">
@@ -49,6 +57,29 @@
                     <!-- <span>View Cart</span> -->
                     <span>Checkout</span>
                 </div>
+            </div>
+        </div>
+
+        <!-- Offcanvas Sidebar for Wishlist -->
+        <div class="offcanvas offcanvas-end" id="wishlistsidebar">
+            <div class="offcanvas-header">
+                <h1 class="offcanvas-title">Wish List</h1>
+                <span class="cart-close btn-close text-reset" data-bs-dismiss="offcanvas"></span>
+            </div>
+            <div class="offcanvas-body">
+                <div class="wishlist" id="wishlistContainer">
+
+                </div>
+                <!-- <div class="wishlist-item">
+                    <div class="prod-img">
+                        <img src="./images/Asgaard sofa 5.png" alt="">
+                        <i class="fa-solid fa-heart" style="color: #ff0000;"></i>
+                    </div>
+                    <div class="prod-details">
+                        <span class="title">MIRAGE MR-AT172 285/65</span>
+                        <span id="price">Rs. 250,000.00</span>
+                    </div>
+                </div> -->
             </div>
         </div>
 
@@ -95,12 +126,18 @@
                                 </a>
                             </li>
                             <li class="nav-item xl-my-menu">
-                                <a href="#link" class="icon">
+                                <span class="icon" onclick="showWishlist()" data-bs-toggle="offcanvas"
+                                    data-bs-target="#wishlistsidebar">
                                     <img src="./images/akar-icons_heart.svg" alt="">
-                                </a>
+                                    <span id="wishListItemsCount">0</span>
+                                </span>
+                                <!-- <a href="#link" class="icon">
+                                    <img src="./images/akar-icons_heart.svg" alt="">
+                                </a> -->
                             </li>
                             <li class="nav-item xl-my-menu">
-                                <span class="icon m-0" onclick="showcart()" data-bs-toggle="offcanvas" data-bs-target="#leftsidebar">
+                                <span class="icon m-0" onclick="showcart()" data-bs-toggle="offcanvas"
+                                    data-bs-target="#cartsidebar">
                                     <img src="./images/ant-design_shopping-cart-outlined.svg" alt="">
                                     <span id="cartItemsCount">0</span>
                                 </span>
@@ -126,7 +163,7 @@
                 <button class="btn">
                     <img src="./images/bi_view-list.svg" alt="">
                 </button>
-                <span class="result" id="result">Showing 1–16 of 32 results</span>
+                <span class="result" id="result">Showing 0&ndash;0 of 0 results</span>
             </div>
             <div class="right">
                 <div class="info">

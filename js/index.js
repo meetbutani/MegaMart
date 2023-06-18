@@ -4,6 +4,7 @@ let result = document.getElementById('result');
 let prodcount = document.getElementById('prodcount');
 let sort = document.getElementById('sort');
 let cartContainer = document.getElementById('cartContainer');
+let wishlistContainer = document.getElementById('wishlistContainer');
 
 let pagePrevious = document.getElementById('pagePrevious');
 let pageNo1 = document.getElementById('pageNo1');
@@ -14,6 +15,7 @@ let pageNext = document.getElementById('pageNext');
 let pagenoref = 1;
 let limit = 16;
 let cartItemsCount = 0;
+let wishListItemsCount = 0;
 
 let resp;
 
@@ -36,6 +38,7 @@ function getAllProducts() {
                 // res.products[index]["discountPrice"] = Number(Number(res.products[index].price - ((res.products[index].discountPercentage * res.products[index].price) / 100)).toFixed(2));
                 // res.products[index]["cartCount"] = cartObj[index] ? cartObj[index].cartCount : 0;
                 res.products[index]["cartCount"] = 0;
+                res.products[index]["wishlist"] = false;
             }
 
             let cartObj = getProductsCart();
@@ -45,6 +48,12 @@ function getAllProducts() {
                 // res.products[index]["cartCount"] = cartObj[index] ? cartObj[index].cartCount : 0;
                 res.products[key - 1].cartCount = cartObj[key].cartCount;
                 setCartItemsCount(cartObj[key].cartCount);
+            });
+
+            let wishlistObj = getWishList();
+            Object.keys(wishlistObj).forEach(key => {
+                res.products[key - 1].wishlist = wishlistObj[key].wishlist;
+                setWishListItemsCount(1);
             });
 
             return res;
@@ -86,6 +95,7 @@ function showProducts(res, pageno) {
                             <span>${res.products[index].discountPercentage}%</span>
                             <span>Off</span>
                         </div>
+                        <i class="fa-regular fa-heart wishlist wishlist_hover ${res.products[index].wishlist ? "fill" : ""}" style="color: #ff0000;" id="wishlist-icon-${res.products[index].id}" onclick=${res.products[index].wishlist ? `removeWishList(${res.products[index].id})` : `addWishList(${res.products[index].id})`}></i>
                     </div>
                     <div class="info">
                         <span class="title">${res.products[index].title}</span>
@@ -122,6 +132,33 @@ function showProducts(res, pageno) {
     result.innerHTML = `Showing ${start + 1}–${stop} of ${res.total} results`;
 }
 
+function addWishList(id) {
+    let wishlistObj = getWishList();
+    resp.products[id - 1].wishlist = true;
+    wishlistObj[resp.products[id - 1].id] = resp.products[id - 1];
+    document.getElementById("wishlist-icon-" + id).onclick = () => {
+        removeWishList(id)
+    }
+    document.getElementById("wishlist-icon-" + id).classList.remove("nofill");
+    document.getElementById("wishlist-icon-" + id).classList.add("fill");
+    setWishListItemsCount(1);
+    setWishList(wishlistObj);
+}
+
+function removeWishList(id) {
+    let wishlistObj = getWishList();
+    resp.products[id - 1].wishlist = false;
+    wishlistObj[id] = undefined;
+    document.getElementById("wishlist-icon-" + id).onclick = () => {
+        addWishList(id)
+    }
+    document.getElementById("wishlist-icon-" + id).classList.remove("fill");
+    document.getElementById("wishlist-icon-" + id).classList.add("nofill");
+    setWishListItemsCount(-1);
+    setWishList(wishlistObj);
+    showWishlist();
+}
+
 function addToCart(id) {
     let cartObj = getProductsCart();
     resp.products[id - 1].cartCount++;
@@ -142,7 +179,7 @@ function removeFromCart(id) {
     cartObj.subtotal -= cartObj[id].discountPrice * cartObj[id].cartCount;
     // cartObj.subtotal = Number(Number(cartObj.subtotal - (cartObj[id].discountPrice * cartObj[id].cartCount)).toFixed(2));
     setCartItemsCount(-cartObj[id].cartCount);
-    resp.products[id-1].cartCount = 0;
+    resp.products[id - 1].cartCount = 0;
     cartObj[id] = undefined;
     // console.log(Object.keys(cartObj).length, Object.keys(cartObj));
     if (Object.keys(cartObj).length <= 2) {
@@ -209,6 +246,33 @@ function showcart() {
     });
 }
 
+function showWishlist() {
+    wishlistContainer.innerHTML = "";
+    let wishlistObj = getWishList();
+    
+    Object.keys(wishlistObj).forEach(key => {
+        wishlistContainer.insertAdjacentHTML("beforeend", `
+            <div class="wishlist-item">
+                <div class="prod-img">
+                    <img src="${wishlistObj[key].thumbnail}" alt="">
+                    <div class="frame"></div>
+                    <i class="fa-solid fa-heart" style="color: #ff0000;" onclick="removeWishList(${key})"></i>
+                </div>
+                <div class="prod-details">
+                    <span class="title">${wishlistObj[key].title}</span>
+                    <span id="price">Rs. ${Number(wishlistObj[key].discountPrice).toFixed(2)}</span>
+                </div>
+                <button class="addcart" onclick="addToCart(${wishlistObj[key].id})">Add To Cart</button>
+            </div>
+        `);
+    });
+}
+
+function setWishListItemsCount(num) {
+    wishListItemsCount += num;
+    document.getElementById("wishListItemsCount").innerHTML = wishListItemsCount;
+}
+
 function setCartItemsCount(num) {
     cartItemsCount += num;
     document.getElementById("cartItemsCount").innerHTML = cartItemsCount;
@@ -225,6 +289,19 @@ function getProductsCart() {
 
 function setProductsCart(list) {
     localStorage.setItem("ProductsCart", JSON.stringify(list));
+}
+
+function getWishList() {
+    if (localStorage.getItem("WishList") == null) {
+        return {};
+    }
+    else {
+        return JSON.parse(localStorage.getItem("WishList"));
+    }
+}
+
+function setWishList(list) {
+    localStorage.setItem("WishList", JSON.stringify(list));
 }
 
 prodcount.addEventListener("change", () => {

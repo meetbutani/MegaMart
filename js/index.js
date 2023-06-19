@@ -149,11 +149,13 @@ function removeWishList(id) {
     let wishlistObj = getWishList();
     resp.products[id - 1].wishlist = false;
     wishlistObj[id] = undefined;
-    document.getElementById("wishlist-icon-" + id).onclick = () => {
-        addWishList(id)
+    if (document.getElementById("wishlist-icon-" + id)) {
+        document.getElementById("wishlist-icon-" + id).onclick = () => {
+            addWishList(id)
+        }
+        document.getElementById("wishlist-icon-" + id).classList.remove("fill");
+        document.getElementById("wishlist-icon-" + id).classList.add("nofill");
     }
-    document.getElementById("wishlist-icon-" + id).classList.remove("fill");
-    document.getElementById("wishlist-icon-" + id).classList.add("nofill");
     setWishListItemsCount(-1);
     setWishList(wishlistObj);
     showWishlist();
@@ -249,7 +251,7 @@ function showcart() {
 function showWishlist() {
     wishlistContainer.innerHTML = "";
     let wishlistObj = getWishList();
-    
+
     Object.keys(wishlistObj).forEach(key => {
         wishlistContainer.insertAdjacentHTML("beforeend", `
             <div class="wishlist-item">
